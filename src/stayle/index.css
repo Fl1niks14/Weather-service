@@ -1,0 +1,48 @@
+.light {
+	--bg-color: #eaf4f9;
+	/* нежно-голубой фон */
+	--text-color: #1a1a1a;
+	/* тёмный текст */
+	--card-bg: #ffffff;
+	/* белые карточки */
+	--accent-color: #0088cc;
+	/* голубой акцент */
+	--border-color: #dbe4ea;
+}
+
+/* Тёмная тема */
+.dark {
+	--bg-color: #1b1f22;
+	/* тёмный фон */
+	--text-color: #e5e5e5;
+	/* светлый текст */
+	--card-bg: #2c3338;
+	/* серо-графитовые карточки */
+	--accent-color: #4fc3f7;
+	/* голубой акцент */
+	--border-color: #3f474d;
+}
+
+/* Базовая стилизация */
+body {
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	font-family: Libre Baskerville; 
+	font-weight: 300;
+	transition: background-color 0.3s ease, color 0.3s ease;
+	margin: 0;
+	padding: 0;
+}
+
+h1,
+h2,
+h3 {
+	margin: 0;
+	font-weight: 600;
+	color: var(--text-color);
+}
+
+h3 {
+	font-size: 1.1rem;
+	margin-bottom: 8px;
+}

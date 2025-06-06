@@ -1,0 +1,32 @@
+.card {
+	background-color: var(--card-bg);
+	border-radius: 16px;
+	padding: 16px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	border: 1px solid var(--border-color);
+	transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.container{
+	display: flex;
+	margin-right: 10px ;
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+.icon {
+	width: 48px;
+	height: 48px;
+}
+.day{
+	margin-right: 5px;
+}
+.temp{
+	margin-right: 5px;
+}
+

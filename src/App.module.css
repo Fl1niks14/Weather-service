@@ -1,0 +1,45 @@
+.global__container {
+	max-width: 1024px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.header_theme {
+	display: flex;
+	justify-content: start;
+	padding: 10px 20px;
+}
+
+.app__wrapper {
+	display: flex;
+	margin-top: 50px;
+}
+
+.app__container {
+	width: 100%;
+	max-width: 1400px;
+	display: grid;
+	grid-template-columns: 0.4fr 2.2fr;
+	grid-template-rows: auto auto;
+	gap: 20px;
+	grid-template-areas:
+		"time weather"
+		"daily hourly";
+}
+
+.header_time {
+	grid-area: time;
+}
+
+.weather_card {
+	grid-area: weather;
+}
+
+.forecast_daily {
+	grid-area: daily;
+}
+
+.forecast_hourly {
+	grid-area: hourly;
+	
+}
