@@ -1,12 +1,18 @@
 .global__container {
-	max-width: 1024px;
-	width: 100%;
+	max-width: 1200px;
 	margin: 0 auto;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px; 
+	border-radius: 16px;
+	background-color: var(--back-color);
+	transition: background-color 0.3s ease;
 }
 
 .header_theme {
 	display: flex;
-	justify-content: start;
+	justify-content: space-between;
 	padding: 10px 20px;
 }
 
@@ -17,10 +23,10 @@
 
 .app__container {
 	width: 100%;
-	max-width: 1400px;
+	max-width: 1024px;
 	display: grid;
-	grid-template-columns: 0.4fr 2.2fr;
-	grid-template-rows: auto auto;
+	grid-template-columns: 0.2fr 1fr;
+	
 	gap: 20px;
 	grid-template-areas:
 		"time weather"

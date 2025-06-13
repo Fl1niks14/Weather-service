@@ -1,14 +1,17 @@
 import styles from './ForecastDaily.module.css'
 import { getWeather } from '../api/weather'
 import { useEffect, useState } from 'react'
-
+interface Props {
+	lat: number
+	lon: number
+}
 interface DailyForecast {
 	day: string
 	temp: number
 	icon: string
 }
 
-const ForecastDaily: React.FC = () => {
+const ForecastDaily: React.FC<Props> = ({ lat, lon }) => {
 	const [dailyData, setDailyData] = useState<DailyForecast[]>([])
 	const [error, setError] = useState<string | null>(null)
 	const [loading, setLoading] = useState(false)
@@ -18,7 +21,7 @@ const ForecastDaily: React.FC = () => {
 			setLoading(true)
 			setError(null)
 			try {
-				const data = await getWeather(53.5078, 49.4204)
+				const data = await getWeather(lat, lon)
 				const forecasts = (data as any).forecasts.slice(0, 6)
 
 				const formatted = forecasts.map((f: any) => ({
@@ -38,7 +41,7 @@ const ForecastDaily: React.FC = () => {
 		}
 
 		fetchData()
-	}, [])
+	}, [lat, lon])
 
 	if (loading) return <p>Загрузка прогноза...</p>
 	if (error) return <p style={{ color: 'red' }}>{error}</p>

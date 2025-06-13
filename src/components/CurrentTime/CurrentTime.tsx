@@ -1,31 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import styles from './CurrentTime.module.css'
 
-const CurrentTime: React.FC = () => {
-	const [time, setTime] = useState('')
+interface Props {
+	nowDt: string
+	timezone: string
+}
+
+const CurrentTime: React.FC<Props> = ({ nowDt, timezone }) => {
+	const [currentTime, setCurrentTime] = useState<Date | null>(null)
 
 	useEffect(() => {
-		const updateTime = () => {
-			const now = new Date()
-			const formatted = now.toLocaleTimeString([], {
-				hour: '2-digit',
-				minute: '2-digit',
-				second: '2-digit',
-				hour12: false
-			})
-			setTime(formatted)
+		if (nowDt) {
+			setCurrentTime(new Date(nowDt))
 		}
+	}, [nowDt, timezone])
 
-		updateTime()
-		const timerId = setInterval(updateTime, 1000)
-		return () => clearInterval(timerId)
-	}, [])
+	useEffect(() => {
+		if (!currentTime) return
+
+		const interval = setInterval(() => {
+			setCurrentTime(prev => (prev ? new Date(prev.getTime() + 60000) : null))
+		}, 60000)
+
+		return () => clearInterval(interval)
+	}, [currentTime])
+
+	if (!currentTime) return <p className={styles.loading}>Загрузка времени...</p>
+
+	const formatted = new Intl.DateTimeFormat('ru-RU', {
+		hour: '2-digit',
+		minute: '2-digit',
+		timeZone: timezone,
+		timeZoneName: 'short'
+	}).format(currentTime)
 
 	return (
 		<>
 			<div className={styles.container}>
-				<h2 className={styles.title}>Tolyatty</h2>
-				<h2 className={styles.time}>{time}</h2>
+				<h2 className={styles.time__title}>Время</h2>
+				<p className={styles.time}>{formatted}</p>
 			</div>
 		</>
 	)

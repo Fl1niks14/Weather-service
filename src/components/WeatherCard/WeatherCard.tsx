@@ -2,18 +2,30 @@ import React, { useEffect, useState } from 'react'
 import { getWeather } from '../api/weather'
 import styles from './WeatherCard.module.css'
 
-const WeatherCard: React.FC = () => {
+interface Props {
+	lat: number
+	lon: number
+	onTimeUpdate: (nowDt: string, timezone: string) => void
+}
+
+const WeatherCard: React.FC<Props> = ({ lat, lon, onTimeUpdate }) => {
 	const [weather, setWeather] = useState<any | null>(null)
 	const [error, setError] = useState<string | null>(null)
 
 	useEffect(() => {
-		getWeather(53.5078, 49.4204)
-			.then(data => setWeather(data))
-			.catch(err => {
+		const fetchData = async () => {
+			try {
+				const data = await getWeather(lat, lon)
+				setWeather(data)
+				onTimeUpdate((data as any).now_dt, (data as any).info.tzinfo.name)
+			} catch (err) {
 				console.error('Ошибка API:', err)
-				setError('Не удалось загрузить погоду')
-			})
-	}, [])
+				setError('Ошибка получения данных погоды')
+			}
+		}
+
+		fetchData()
+	}, [lat, lon, onTimeUpdate])
 
 	if (error) return <div className={styles.card}>{error}</div>
 	if (!weather || !weather.fact)
@@ -28,7 +40,8 @@ const WeatherCard: React.FC = () => {
 		wind_speed,
 		icon
 	} = weather.fact
-	const date = new Date().toLocaleDateString('ru-RU', {
+
+	const date = new Date(weather.now_dt).toLocaleDateString('ru-RU', {
 		weekday: 'long',
 		day: 'numeric',
 		month: 'long'
@@ -59,7 +72,6 @@ const WeatherCard: React.FC = () => {
 	)
 }
 
-// Перевод кода состояния погоды в читаемый формат
 function translateCondition(code: string): string {
 	const map: Record<string, string> = {
 		clear: 'Ясно',
@@ -71,15 +83,11 @@ function translateCondition(code: string): string {
 		rain: 'Дождь',
 		moderate_rain: 'Умеренный дождь',
 		heavy_rain: 'Сильный дождь',
-		continuous_heavy_rain: 'Длительный сильный дождь',
 		showers: 'Ливень',
 		snow: 'Снег',
 		light_snow: 'Небольшой снег',
 		snow_showers: 'Снегопад',
-		hail: 'Град',
-		thunderstorm: 'Гроза',
-		thunderstorm_with_rain: 'Гроза с дождем',
-		thunderstorm_with_hail: 'Гроза с градом'
+		thunderstorm: 'Гроза'
 	}
 	return map[code] || code
 }

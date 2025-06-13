@@ -7,12 +7,15 @@ interface HourlyForecast {
 	temp: number
 	icon: string
 }
-
-const ForecastHourly: React.FC = () => {
+interface Props {
+	lat: number
+	lon: number
+}
+const ForecastHourly: React.FC<Props> = ({ lat, lon }) => {
 	const [hourlyData, setHourlyData] = useState<HourlyForecast[]>([])
 
 	useEffect(() => {
-		getWeather(53.5078, 49.4204)
+		getWeather(lat, lon)
 			.then(data => {
 				const hours = (data as any).forecasts[0].hours.slice(0, 10)
 				const formatted = hours.map((h: any) => ({
@@ -25,7 +28,7 @@ const ForecastHourly: React.FC = () => {
 			.catch(err => {
 				console.error('Ошибка получения погодных данных:', err)
 			})
-	}, [])
+	}, [lat, lon])
 
 	return (
 		<div className={styles.card}>

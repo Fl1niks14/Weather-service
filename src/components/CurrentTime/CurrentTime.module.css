@@ -8,16 +8,16 @@
 	transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.title {
-	font-size: 1.5rem;
-	font-weight: 600;
-	text-align: center;
-} 
-
 .time {
-	color:var(--text-color);
+	display: inline-block;
+	color:var(--text-color); 
 	text-align: center;
-	font-size: 26 px;
+	font-size: 16px;
 	position: absolute;
 	margin-left: 6px;
+}
+
+.time__title{
+	display: flex;
+	justify-content: center;
 }
